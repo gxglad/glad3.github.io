@@ -1,0 +1,369 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>张家港中等专业学校社团活动信息网</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="css/mui.min.css" rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5faff; /* 淡蓝色背景 */
+            color: #333;
+        }
+
+        .header {
+            background-color: #007bff; /* 蓝色头部背景 */
+            color: white;
+            padding: 10px 20px; /* 减小头部高度 */
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 1.2em;
+        }
+
+        .header .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* 图标与文字之间的间距 */
+        }
+
+        .header .header-title h2 {
+            margin: 0; /* 移除默认的margin */
+            font-size: 1.5em; /* 根据需要调整字体大小 */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navbar {
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+            background-color: #007bff; /* 蓝色导航栏 */
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar li {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .navbar li a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 10px 16px; /* 减小链接高度 */
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .navbar li a:hover {
+            color: #fff;
+        }
+
+        .navbar li a:hover::before {
+            width: 100%;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff; /* 蓝色表头 */
+            color: white;
+            font-weight: normal;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px; /* 圆角 */
+            font-size: 16px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #007bff; /* 蓝色按钮 */
+            color: white;
+            cursor: pointer;
+            border: none;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+            border-radius: 4px; /* 圆角 */
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3; /* 悬停时更深的蓝色 */
+        }
+
+        /* 弹窗样式 */
+        .login-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 300px;
+            height: 200px;
+            background-color: white;
+            border: 1px solid black;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .login-popup.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-title">
+            <img src="image.png" alt="图标" width="30" height="30">
+            <h3>张家港中等专业学校 社团活动信息网</h3>
+        </div>
+    </div>
+
+    <div class="container">
+        <ul class="navbar">
+            <li><a href="#home"><i class="fas fa-home"></i> 首页</a></li>
+            <li><a href="#news"><i class="fas fa-newspaper"></i> 最新资讯</a></li>
+            <li><a href="#resources"><i class="fas fa-file-alt"></i> 资料共享</a></li>
+            <li><a href="#login"><i class="fas fa-sign-in-alt"></i> 登录/注册</a></li>
+        </ul>
+
+        <section id="home" class="section">
+            <h2>欢迎来到我们的网站</h2>
+            <p>这里是我们分享社团活动信息的地方。</p>
+            <div>
+                <div id="slider" class="mui-slider">
+                    <div class="mui-slider-group mui-slider-loop">
+                        <div class="mui-slider-item mui-slider-item-duplicate">
+                            <a href="#">
+                                <img src="./img/3.png" style="height: 200px;">
+                            </a>
+                        </div>
+                        <div class="mui-slider-item">
+                            <a href="#">
+                                <img src="./img/1.png" style="height: 200px;">
+                            </a>
+                        </div>
+                        <div class="mui-slider-item">
+                            <a href="#">
+                                <img src="./img/2.png" style="height: 200px;">
+                            </a>
+                        </div>
+                        <div class="mui-slider-item">
+                            <a href="#">
+                                <img src="./img/3.png" style="height: 200px;">
+                            </a>
+                        </div>
+                        <div class="mui-slider-item mui-slider-item-duplicate">
+                            <a href="#">
+                                <img src="./img/1.png" style="height: 200px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mui-slider-indicator">
+                        <div class="mui-indicator mui-active"></div>
+                        <div class="mui-indicator"></div>
+                        <div class="mui-indicator"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="section">
+            <h2>最新资讯</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>标题</th>
+                            <th>作者</th>
+                            <th>日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="showLoginPopup()">
+                            <td>社团活动安排</td>
+                            <td>管理员</td>
+                            <td>2024-10-15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="resources" class="section">
+            <h2>资料共享</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>文件名</th>
+                            <th>上传者</th>
+                            <th>上传日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="showLoginPopup()">
+                            <td><a href="#">社团章程.pdf</a></td>
+                            <td>管理员</td>
+                            <td>2024-10-15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="form-container section" id="login">
+            <h2>登录/注册</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">用户名:</label>
+                    <input type="text" id="username" class="username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码:</label>
+                    <input type="password" id="password" class="password" name="password">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="提交">
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="overlay"></div>
+    <div class="login-popup">
+        <p>请先登录以查看详细信息。</p>
+    </div>
+
+    <script src="js/mui.min.js"></script>
+    <script type="text/javascript">
+        mui.init();
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 阻止表单默认提交行为
+
+            function dl() {
+                var username = document.querySelector('.username').value.trim();
+                var password = document.querySelector('.password').value.trim();
+                
+                if(username !== "" && password !== "") {
+                    if(username === "xulaoshi" && password === "111111") {
+                        mui.openWindow('zhuye.html'); // 跳转到主页
+                    } else {
+                        mui.toast('账号或密码错误！！！');
+                    }
+                } else {
+                    mui.toast("账号或密码为空！！！");
+                }
+            }
+
+            dl();
+        });
+
+        function showLoginPopup() {
+            document.querySelector('.overlay').classList.add('active');
+            document.querySelector('.login-popup').classList.add('active');
+        }
+
+        // 关闭弹窗的功能（通常由点击事件触发）
+        function closeLoginPopup() {
+            document.querySelector('.overlay').classList.remove('active');
+            document.querySelector('.login-popup').classList.remove('active');
+        }
+
+        // 添加关闭弹窗的监听器（例如点击背景或其他关闭按钮）
+        document.querySelector('.overlay').addEventListener('click', closeLoginPopup);
+    </script>
+</body>
+</html>
